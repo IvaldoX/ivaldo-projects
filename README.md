@@ -20,6 +20,7 @@ Aqui compartilho automações, tutoriais e exemplos práticos de projetos em **L
 - Proxmox, Virtualização
 - Docker & Docker Compose
 - Ansible & Automação
+- Python
 - Apache / Nginx
 - GLPI, Mailcow, Nextcloud
 - Monitoramento (Zabbix, Grafana)
