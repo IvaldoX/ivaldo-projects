@@ -1,9 +1,0 @@
-security/
-├── README.md
-├── check-ports.sh
-├── check-users.sh
-├── check-failed-logins.sh
-├── firewall-setup.sh
-├── vpn-status.sh
-└── fail2ban-status.sh
-
