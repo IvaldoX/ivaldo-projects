@@ -1,0 +1,105 @@
+
+---
+- name: Instalar Apache, PHP e MariaDB
+  hosts: all
+  become: yes
+  vars:
+    mysql_root_password: "SuaSenhaForteAqui"
+    mysql_db: "meubanco"
+    mysql_user: "usuario"
+    mysql_password: "SenhaDoUsuario"
+
+  tasks:
+    - name: Atualizar pacotes do sistema
+      apt:
+        update_cache: yes
+        upgrade: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Atualizar pacotes do sistema (RedHat/CentOS)
+      yum:
+        name: "*"
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    - name: Instalar Apache
+      apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Instalar Apache (RedHat/CentOS)
+      yum:
+        name: httpd
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Instalar PHP e módulos
+      apt:
+        name:
+          - php
+          - php-mysql
+          - libapache2-mod-php
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Instalar PHP e módulos (RedHat/CentOS)
+      yum:
+        name:
+          - php
+          - php-mysqlnd
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Instalar MariaDB
+      apt:
+        name: mariadb-server
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Instalar MariaDB (RedHat/CentOS)
+      yum:
+        name: mariadb-server
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Iniciar e habilitar Apache
+      service:
+        name: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+        state: started
+        enabled: yes
+
+    - name: Iniciar e habilitar MariaDB
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Configurar senha do root do MariaDB
+      mysql_user:
+        login_user: root
+        login_password: ''
+        user: root
+        password: "{{ mysql_root_password }}"
+        host_all: yes
+      ignore_errors: yes
+
+    - name: Criar banco de dados
+      mysql_db:
+        name: "{{ mysql_db }}"
+        state: present
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+
+    - name: Criar usuário do banco
+      mysql_user:
+        name: "{{ mysql_user }}"
+        password: "{{ mysql_password }}"
+        priv: "{{ mysql_db }}.*:ALL"
+        state: present
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+
+     #Crie um arquivo de inventario Ex: hosts.ini
+     #Execução
+     #ansible-playbook -i hosts.ini ansible/install-apache.yml

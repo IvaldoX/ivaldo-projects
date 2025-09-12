@@ -1,0 +1,40 @@
+---
+- name: Backup automático de chaves SSH e arquivos importantes
+  hosts: all
+  become: yes
+  vars:
+    backup_dir: "/tmp/ssh_backup/{{ ansible_hostname }}"
+    ssh_files:
+      - "~/.ssh/id_rsa"
+      - "~/.ssh/id_rsa.pub"
+      - "~/.ssh/authorized_keys"
+
+  tasks:
+    - name: Criar diretório de backup
+      file:
+        path: "{{ backup_dir }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0700'
+
+    - name: Fazer backup dos arquivos SSH
+      copy:
+        src: "{{ item | expanduser }}"
+        dest: "{{ backup_dir }}/"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0600'
+        backup: yes
+      loop: "{{ ssh_files }}"
+      ignore_errors: yes
+
+    - name: Criar tar.gz com todos os backups
+      archive:
+        path: "{{ backup_dir }}/"
+        dest: "/tmp/ssh_backup_{{ ansible_hostname }}.tar.gz"
+        format: gz
+
+    - name: Mostrar caminho do arquivo de backup
+      debug:
+        msg: "Backup completo! Arquivo: /tmp/ssh_backup_{{ ansible_hostname }}.tar.gz"
