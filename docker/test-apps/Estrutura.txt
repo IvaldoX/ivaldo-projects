@@ -1,0 +1,9 @@
+docker/test-apps/
+├── hello-world/
+│   └── Dockerfile
+├── php-app/
+│   ├── Dockerfile
+│   └── index.php
+└── python-app/
+    ├── Dockerfile
+    └── app.py
