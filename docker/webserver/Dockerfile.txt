@@ -1,0 +1,17 @@
+# Imagem base
+FROM ubuntu:22.04
+
+# Manter o container atualizado
+RUN apt-get update && apt-get upgrade -y
+
+# Instalar Apache e PHP
+RUN apt-get install -y apache2 php libapache2-mod-php
+
+# Expor porta 80
+EXPOSE 80
+
+# Copiar site de exemplo
+COPY ./html/ /var/www/html/
+
+# Iniciar Apache em foreground
+CMD ["apache2ctl", "-D", "FOREGROUND"]
