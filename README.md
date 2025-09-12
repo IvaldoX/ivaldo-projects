@@ -11,7 +11,7 @@ Aqui compartilho automações, tutoriais e exemplos práticos de projetos em **L
 - **docker/** → Dockerfiles e docker-compose para serviços úteis (GLPI, Mailcow, Webserver, etc).
 - **monitoring/** → Scripts simples para checar disponibilidade de hosts/serviços.
 - **devops/** → Pipelines CI/CD (ex: GitHub Actions).
-- **security/** → Configurações de firewall, VPN e segurança.
+- **security/** →  Auditoria, Segurança e Redes.
 - **docs/** → Tutoriais e guias passo a passo que eu mesmo documentei.
 
 ## 🛠 Tecnologias que uso
