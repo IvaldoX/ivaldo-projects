@@ -1,0 +1,48 @@
+
+version: '3.8'
+
+services:
+  mailcow:
+    image: mailcow/mailcow-dockerized:latest
+    container_name: mailcow
+    restart: always
+    environment:
+      - MAILCOW_HOSTNAME=mail.seudominio.com
+      - MAILCOW_TIMEZONE=America/Sao_Paulo
+    ports:
+      - "25:25"     # SMTP
+      - "80:80"     # HTTP
+      - "443:443"   # HTTPS
+      - "587:587"   # SMTP Submission
+      - "993:993"   # IMAP SSL
+      - "995:995"   # POP3 SSL
+    volumes:
+      - mailcow-data:/var/lib/mailcow
+      - mailcow-config:/opt/mailcow-dockerized/data
+    networks:
+      - mailcow-net
+
+volumes:
+  mailcow-data:
+  mailcow-config:
+
+networks:
+  mailcow-net:
+    driver: bridge
+
+
+#Observações importantes
+
+#Subdomínio e DNS:
+##Substitua mail.seudominio.com pelo seu domínio real.
+##Configure os registros DNS (MX, A, SPF, DKIM, DMARC) corretamente.
+
+#Volumes persistentes:
+##mailcow-data → onde ficam os e-mails.
+##mailcow-config → configurações do Mailcow.
+
+#Suba os containers
+##docker-compose up -d
+
+#Acesse o painel web
+##abra https://mail.seudominio.com e finalize a configuração.
