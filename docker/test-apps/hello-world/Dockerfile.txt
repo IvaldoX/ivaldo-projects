@@ -1,0 +1,6 @@
+# Imagem base mínima
+FROM alpine:latest
+
+# Comando que será executado
+CMD ["echo", "Hello, world! Docker Test App"]
+
