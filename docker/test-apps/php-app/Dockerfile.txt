@@ -1,0 +1,6 @@
+FROM php:8.2-apache
+
+# Copiar código PHP para o container
+COPY ./index.php /var/www/html/
+
+EXPOSE 80
