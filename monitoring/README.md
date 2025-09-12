@@ -1,6 +1,14 @@
 # Monitoring
 
-Scripts e ferramentas para monitoramento de servidores e serviços.  
-Inclui:
-- Scripts em Python e Bash para checagem de disponibilidade (ping, HTTP)
-- Exemplos de integração com Zabbix e Grafana
+Esta pasta contém scripts simples de monitoramento em **Bash** e **Python**.
+
+## Scripts incluídos
+
+### Bash
+- **check-disk.sh** → Verifica uso do disco e alerta caso passe de 80%.
+- **check-cpu.sh** → Verifica uso da CPU e alerta caso passe de 75%.
+- **check-memory.sh** → Verifica uso da memória RAM e alerta caso passe de 80%.
+
+### Python
+- **check-http.py** → Testa disponibilidade de um site (HTTP check).
+- **check_ping.py** → Testa conectividade de rede com ping.
